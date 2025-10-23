@@ -68,7 +68,7 @@ export class BridgeServer {
     this.app.use(express.json({ limit: '50mb' }));
     
     // CORS
-    this.app.use((req, res, next) => {
+    this.app.use((req: any, res: any, next: any) => {
       const config = this.configManager.getConfig();
       if (config.server.cors.enabled) {
         res.header('Access-Control-Allow-Origin', '*');
@@ -79,7 +79,7 @@ export class BridgeServer {
     });
 
     // Logging
-    this.app.use((req, res, next) => {
+    this.app.use((req: any, res: any, next: any) => {
       this.outputManager.log(`${req.method} ${req.path}`);
       next();
     });
@@ -87,17 +87,17 @@ export class BridgeServer {
 
   private setupRoutes(): void {
     // Health check
-    this.app.get('/api/health', (req, res) => {
+    this.app.get('/api/health', (req: any, res: any) => {
       res.json({ status: 'ok', timestamp: new Date().toISOString() });
     });
 
     // Get status
-    this.app.get('/api/status', (req, res) => {
+    this.app.get('/api/status', (req: any, res: any) => {
       res.json(this.getStatus());
     });
 
     // Submit action
-    this.app.post('/api/action', async (req, res) => {
+    this.app.post('/api/action', async (req: any, res: any) => {
       try {
         const action: IncomingAction = req.body;
         const result = await this.handleAction(action);
@@ -109,19 +109,19 @@ export class BridgeServer {
     });
 
     // Session management
-    this.app.post('/api/session/start', (req, res) => {
+    this.app.post('/api/session/start', (req: any, res: any) => {
       const { goal, metadata } = req.body;
       const session = this.sessionManager.createSession(goal, metadata);
       res.json({ sessionId: session.id });
     });
 
-    this.app.post('/api/session/end', (req, res) => {
+    this.app.post('/api/session/end', (req: any, res: any) => {
       const { sessionId, status } = req.body;
       this.sessionManager.endSession(sessionId, status || 'completed');
       res.json({ success: true });
     });
 
-    this.app.get('/api/session/:id', (req, res) => {
+    this.app.get('/api/session/:id', (req: any, res: any) => {
       const session = this.sessionManager.getSession(req.params.id);
       if (session) {
         res.json(session);

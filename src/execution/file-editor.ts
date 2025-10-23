@@ -118,13 +118,13 @@ export class FileEditor {
 
   private cleanupOldBackups(backupDir: string, fileName: string, maxBackups: number): void {
     const backups = fs.readdirSync(backupDir)
-      .filter(f => f.startsWith(fileName))
-      .map(f => ({
+      .filter((f: string) => f.startsWith(fileName))
+      .map((f: string) => ({
         name: f,
         path: path.join(backupDir, f),
         time: fs.statSync(path.join(backupDir, f)).mtime.getTime()
       }))
-      .sort((a, b) => b.time - a.time);
+      .sort((a: {name: string, path: string, time: number}, b: {name: string, path: string, time: number}) => b.time - a.time);
 
     // Remove old backups
     if (backups.length > maxBackups) {

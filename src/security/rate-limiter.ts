@@ -21,13 +21,13 @@ export class RateLimiter {
 
   constructor(customLimits?: Partial<Record<string, number>>) {
     if (customLimits) {
-      this.limits = { ...this.limits, ...customLimits };
+      this.limits = { ...this.limits, ...customLimits } as Record<string, number>;
     }
 
     // Reset counters every minute
     this.resetInterval = setInterval(() => {
       this.resetExpiredCounters();
-    }, 60000);
+    }, 60000) as NodeJS.Timeout;
   }
 
   async checkLimit(type: string, identifier: string = 'default'): Promise<boolean> {

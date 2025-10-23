@@ -73,12 +73,20 @@ export interface ActionResult {
   httpStatus?: number;
   consoleErrors?: string[];
   
-  // For 'status'
+  // For 'status' - workspace status
   workspaceRoot?: string;
   activeBranch?: string;
   dirtyFiles?: string[];
   openFiles?: string[];
   runningProcesses?: string[];
+  
+  // For 'status' - bridge server status
+  serverRunning?: boolean;
+  port?: number;
+  sessionActive?: boolean;
+  currentSessionId?: string;
+  stepCount?: number;
+  maxSteps?: number;
 }
 
 export interface Diagnostic {

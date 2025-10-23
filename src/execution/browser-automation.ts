@@ -55,14 +55,14 @@ export class BrowserAutomation {
       const consoleErrors: string[] = [];
 
       // Capture console errors
-      page.on('console', msg => {
+      page.on('console', (msg: any) => {
         if (msg.type() === 'error') {
           consoleErrors.push(msg.text());
         }
       });
 
       // Capture page errors
-      page.on('pageerror', error => {
+      page.on('pageerror', (error: Error) => {
         consoleErrors.push(error.message);
       });
 

@@ -110,7 +110,7 @@ async function startServer(context: vscode.ExtensionContext) {
       `AI Bridge server running at ${connectionUrl}`,
       'Copy URL',
       'Show Logs'
-    ).then(action => {
+    ).then((action: string | undefined) => {
       if (action === 'Copy URL') {
         vscode.env.clipboard.writeText(connectionUrl);
         vscode.window.showInformationMessage('URL copied to clipboard');
@@ -155,7 +155,7 @@ function showStatus() {
     vscode.window.showInformationMessage(
       'AI Bridge Status: Server not running',
       'Start Server'
-    ).then(action => {
+    ).then((action: string | undefined) => {
       if (action === 'Start Server') {
         vscode.commands.executeCommand('aiBridge.start');
       }
@@ -176,7 +176,7 @@ function showStatus() {
   }
 
   vscode.window.showInformationMessage(message, 'Show Logs', 'Stop Server')
-    .then(action => {
+    .then((action: string | undefined) => {
       if (action === 'Show Logs') {
         outputManager.show();
       } else if (action === 'Stop Server') {
