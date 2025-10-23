@@ -1,0 +1,164 @@
+{
+  "name": "ai-bridge-agent",
+  "displayName": "AI Bridge Agent",
+  "description": "Bridge between external AI chat interfaces and VS Code for automated development workflows",
+  "version": "1.0.0",
+  "publisher": "your-publisher-name",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Testing",
+    "Debuggers"
+  ],
+  "keywords": [
+    "ai",
+    "automation",
+    "chatgpt",
+    "claude",
+    "gemini",
+    "bridge",
+    "agent"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aiBridge.start",
+        "title": "AI Bridge: Start Server"
+      },
+      {
+        "command": "aiBridge.stop",
+        "title": "AI Bridge: Stop Server"
+      },
+      {
+        "command": "aiBridge.status",
+        "title": "AI Bridge: Show Status"
+      },
+      {
+        "command": "aiBridge.configure",
+        "title": "AI Bridge: Configure Settings"
+      },
+      {
+        "command": "aiBridge.openDashboard",
+        "title": "AI Bridge: Open Dashboard"
+      },
+      {
+        "command": "aiBridge.cancelSession",
+        "title": "AI Bridge: Cancel Current Session"
+      }
+    ],
+    "configuration": {
+      "title": "AI Bridge Agent",
+      "properties": {
+        "aiBridge.serverPort": {
+          "type": "number",
+          "default": 3737,
+          "description": "Local server port for AI communication",
+          "minimum": 1024,
+          "maximum": 65535
+        },
+        "aiBridge.autoApprove": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically approve safe commands without user confirmation"
+        },
+        "aiBridge.maxStepsPerSession": {
+          "type": "number",
+          "default": 50,
+          "description": "Maximum steps allowed before requiring session reset",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "aiBridge.allowedCommands": {
+          "type": "array",
+          "default": [
+            "npm",
+            "yarn",
+            "pnpm",
+            "node",
+            "python",
+            "pytest",
+            "go",
+            "cargo",
+            "deno",
+            "bun",
+            "npx"
+          ],
+          "description": "List of allowed command prefixes",
+          "items": {
+            "type": "string"
+          }
+        },
+        "aiBridge.commandTimeout": {
+          "type": "number",
+          "default": 600,
+          "description": "Maximum command execution time in seconds",
+          "minimum": 10,
+          "maximum": 3600
+        },
+        "aiBridge.enableBrowser": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable browser automation for UI verification"
+        },
+        "aiBridge.maskCredentials": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically mask credentials in logs"
+        },
+        "aiBridge.createBackups": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create backups before file modifications"
+        },
+        "aiBridge.logLevel": {
+          "type": "string",
+          "default": "info",
+          "enum": [
+            "debug",
+            "info",
+            "warn",
+            "error"
+          ],
+          "description": "Logging verbosity level"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "@types/ws": "^8.5.10",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2",
+    "@vscode/test-electron": "^2.3.8"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.16.0",
+    "playwright": "^1.40.0",
+    "uuid": "^9.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ai-bridge-agent.git"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "server": {
+    "port": 3737,
+    "host": "localhost",
+    "enableWebSocket": true,
+    "cors": {
+      "enabled": true,
+      "origins": [
+        "http://localhost:*",
+        "https://chat.openai.com",
+        "https://claude.ai",
+        "https://gemini.google.com"
+      ]
+    }
+  },
+  "security": {
+    "requireApproval": {
+      "fileOperations": true,
+      "commandExecution": true,
+      "networkAccess": true,
+      "dangerousCommands": true
+    },
+    "allowedCommands": [
+      "npm",
+      "yarn",
+      "pnpm",
+      "node",
+      "python",
+      "pytest",
+      "go",
+      "cargo",
+      "deno",
+      "bun",
+      "npx"
+    ],
+    "blockedCommands": [
+      "rm -rf /",
+      "sudo",
+      "su",
+      "chmod 777",
+      "mkfs",
+      "dd if="
+    ],
+    "allowedPaths": [
+      "${workspaceRoot}"
+    ],
+    "maxStepsPerSession": 50,
+    "commandTimeout": 600
+  },
+  "execution": {
+    "workingDirectory": "${workspaceRoot}",
+    "shell": "bash",
+    "environment": {
+      "NODE_ENV": "development"
+    }
+  },
+  "browser": {
+    "enabled": true,
+    "headless": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "defaultTimeout": 30000
+  },
+  "logging": {
+    "level": "info",
+    "maskCredentials": true,
+    "saveToFile": true,
+    "logPath": ".aiBridge/logs"
+  },
+  "backup": {
+    "enabled": true,
+    "path": ".aiBridge/backups",
+    "maxBackups": 10
+  }
+}
