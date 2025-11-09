@@ -137,7 +137,8 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
-    "package": "vsce package"
+    "package": "vsce package",
+    "start": "node test-server.js"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
